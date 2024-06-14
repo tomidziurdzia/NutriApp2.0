@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Doctor {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  lastname  String
+  email     String @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  patients  Patient[]
+  role      Role @default(DOCTOR)
+}
+
+model Patient {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  lastname      String
+  email         String @unique
+  password      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  kcal          Float
+  proteins      Float
+  carbohydrates Float
+  fats          Float
+  doctor        Doctor  @relation(fields: [doctorId], references: [id])
+  doctorId      String @db.ObjectId
+  role          Role @default(PATIENT)
+  dailyDiet     DailyDiet[]
+}
+
+enum Role {
+  DOCTOR
+  PATIENT
+}
+
+model Food {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  category      String
+  kcal          Float
+  proteins      Float
+  carbohydrates Float
+  fats          Float
+  foodDosis     FoodDosis[]
+}
+
+model DailyDiet {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  date          DateTime @default(now())
+  patientId     String  @db.ObjectId
+  patient       Patient @relation(fields: [patientId], references: [id])
+  foods         FoodDosis[]
+}
+
+model FoodDosis {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  quantity      Float
+
+  dishType      DishType
+
+  food          Food   @relation(fields: [foodId], references: [id])
+  foodId        String @db.ObjectId
+
+  dailyDiet     DailyDiet @relation(fields: [dailyDietId], references: [id])
+  dailyDietId   String @db.ObjectId
+}
+
+enum DishType {
+  BREAKFAST
+  LUNCH
+  SNACK
+  DINNER
+}

@@ -1,4 +1,4 @@
-import { Patient } from "@/context/DoctorProvider";
+import { Doctor, Patient } from "@/context/DoctorProvider";
 import clientAxios from "../config/clientAxios";
 
 export interface DoctorSignUp {
@@ -22,14 +22,7 @@ export interface DoctorSignIn {
 
 export interface DoctorSignInResponse {
   success: boolean;
-  data?: {
-    id: string;
-    name: string;
-    lastname: string;
-    email: string;
-    role: string;
-    token: string;
-  };
+  data?: Doctor;
   error?: {
     message: string;
   };
@@ -79,9 +72,10 @@ const signup = async (doctor: DoctorSignUp): Promise<DoctorSignUpResponse> => {
   }
 };
 
-const singin = async (doctor: DoctorSignIn): Promise<DoctorSignInResponse> => {
+const signin = async (doctor: DoctorSignIn): Promise<DoctorSignInResponse> => {
   try {
     const { data } = await clientAxios.post("/doctor/login", doctor);
+    localStorage.setItem("token", data.data!.token);
 
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,6 +114,6 @@ const addPatient = async (patient: AddPatient): Promise<AddPatientResponse> => {
   }
 };
 
-const DoctorService = { signup, singin, doctor, getPatients, addPatient };
+const DoctorService = { signup, signin, doctor, getPatients, addPatient };
 
 export default DoctorService;

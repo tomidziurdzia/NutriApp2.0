@@ -32,9 +32,7 @@ const SignUp = () => {
     if (data.success) {
       setShowForm(!showForm);
     }
-    console.log("submit", data);
   };
-  console.log(data);
 
   return (
     <div className="flex flex-col gap-4">
@@ -135,7 +133,7 @@ const SignUp = () => {
       ) : (
         <Alert variant="success" className="bg-white">
           <RocketIcon className="h-4 w-4" />
-          <AlertTitle>{data?.message}</AlertTitle>
+          <AlertTitle>{data?.error?.message}</AlertTitle>
           <div className="p-2">
             <Link
               to="/auth/sign-in"

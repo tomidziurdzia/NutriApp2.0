@@ -10,7 +10,7 @@ import DoctorService, {
 
 type DoctorStatus = "authenticated" | "not-authenticated" | "loading";
 
-interface Doctor {
+export interface Doctor {
   email: string;
   id: string;
   name: string;
@@ -31,6 +31,7 @@ export interface Patient {
 }
 
 interface DoctorContextType {
+  role?: string;
   status: DoctorStatus;
   data?: DoctorSignUpResponse | DoctorSignInResponse;
   doctor?: Doctor;
@@ -67,6 +68,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<DoctorSignUpResponse>();
   const [doctor, setDoctor] = useState<Doctor>();
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [role, setRole] = useState<string | undefined>("");
 
   useEffect(() => {
     const authenticate = async () => {
@@ -75,6 +77,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
       try {
         const data = await DoctorService.doctor();
         setDoctor(data.data);
+        setRole(data.data?.role);
         setStatus("authenticated");
       } catch (error) {
         setData(undefined);
@@ -106,15 +109,15 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signin = async (doctor: DoctorSignIn) => {
-    const data = await DoctorService.singin(doctor);
+    const data = await DoctorService.signin(doctor);
 
     if (data.success) {
       setData(data.data as unknown as DoctorSignInResponse);
       setStatus("authenticated");
-      localStorage.setItem("token", data.data!.token);
+      setRole(data.data?.role);
       return data;
     } else {
-      setData(data as unknown as DoctorSignInResponse);
+      setData(data);
       return data;
     }
   };
@@ -132,7 +135,16 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <DoctorContext.Provider
-      value={{ status, signup, data, signin, doctor, patients, addPatient }}
+      value={{
+        status,
+        signup,
+        data,
+        signin,
+        doctor,
+        patients,
+        addPatient,
+        role,
+      }}
     >
       {children}
     </DoctorContext.Provider>

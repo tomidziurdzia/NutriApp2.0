@@ -13,9 +13,11 @@ import usePatient from "@/hooks/usePatient";
 import useDoctor from "@/hooks/useDoctor";
 
 const Sidebar = () => {
-  const { patient } = usePatient();
-  const { doctor } = useDoctor();
+  const { role: patientRole } = usePatient();
+  const { role: doctorRole } = useDoctor();
 
+  const role = patientRole || doctorRole;
+  console.log(role);
   return (
     <>
       <div className="flex-1">
@@ -34,7 +36,7 @@ const Sidebar = () => {
             <PersonStanding className="h-6 w-6" />
             Diet
           </NavLink>
-          {!patient && (
+          {role === "DOCTOR" && (
             <NavLink
               to="/pacients"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
@@ -50,7 +52,7 @@ const Sidebar = () => {
             <Apple className="h-6 w-6" />
             Food
           </NavLink>
-          {!patient && (
+          {role === "DOCTOR" && (
             <NavLink
               to="/calendar"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
@@ -66,7 +68,7 @@ const Sidebar = () => {
             <MessageSquare className="h-6 w-6" />
             Chat
           </NavLink>{" "}
-          {!patient && (
+          {role === "DOCTOR" && (
             <NavLink
               to="/settings"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"

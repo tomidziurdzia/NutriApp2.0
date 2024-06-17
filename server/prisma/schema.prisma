@@ -61,7 +61,7 @@ model Food {
 
 model DailyDiet {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
-  date          DateTime @default(now())
+  date          DateTime @default(now()) @db.Date
   patientId     String  @db.ObjectId
   patient       Patient @relation(fields: [patientId], references: [id])
   foods         FoodDosis[]

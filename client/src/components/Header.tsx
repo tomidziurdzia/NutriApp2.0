@@ -14,15 +14,17 @@ import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useDoctor from "@/hooks/useDoctor";
+import usePatient from "@/hooks/usePatient";
 
 const Header = () => {
   const { doctor } = useDoctor();
+  const { data: patient } = usePatient();
 
   return (
     <div className="flex md:justify-end justify-start h-14 items-center gap-4 border-b px-4 lg:h-[65px] lg:px-6">
       <div className="hidden md:flex justify-center items-center gap-4 bg-muted py-1 px-4 rounded-3xl shadow-sm">
         <span>
-          {doctor?.name} {doctor?.lastname}
+          {doctor?.name || patient?.data?.name} {doctor?.lastname}
         </span>
         <Avatar>
           <AvatarImage alt="@shadcn" />

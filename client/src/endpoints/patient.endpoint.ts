@@ -1,3 +1,4 @@
+import { FoodList } from "@/components/DailyDietForm";
 import clientAxios from "../config/clientAxios";
 
 export interface PatientSignIn {
@@ -27,6 +28,42 @@ export interface PatientSignInResponse {
   };
 }
 
+export interface DietDailyResponse {
+  success: boolean;
+  data: DailyDiet[];
+}
+
+export interface CreateDietDailyReponse {
+  success: boolean;
+  data?: {
+    date: Date;
+    foods: Foods[];
+    id: string;
+    patientId: string;
+  };
+}
+
+export interface DailyDiet {
+  date: Date;
+  foods: Foods[];
+}
+
+export interface Foods {
+  id: string;
+  quantity: number;
+  dishType: string;
+  dailyDietId: string;
+  foodId: string;
+  food: {
+    name: string;
+    category: string;
+    carbohydrates: number;
+    fats: number;
+    proteins: number;
+    kcal: number;
+  };
+}
+
 const signin = async (
   doctor: PatientSignIn
 ): Promise<PatientSignInResponse> => {
@@ -51,9 +88,35 @@ const patient = async (): Promise<PatientSignInResponse> => {
   }
 };
 
+const getDaily = async (): Promise<DietDailyResponse> => {
+  try {
+    const { data } = await clientAxios.get("/patient/daily");
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+
+const createDailyFood = async (
+  daily: FoodList[]
+): Promise<CreateDietDailyReponse> => {
+  const foods = [...daily];
+  try {
+    const { data } = await clientAxios.post("/patient/daily", { foods });
+
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+
 const PatientService = {
   signin,
   patient,
+  getDaily,
+  createDailyFood,
 };
 
 export default PatientService;

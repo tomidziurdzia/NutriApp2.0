@@ -7,6 +7,7 @@ import SignUp from "./public-pages/SignUp";
 import { DashboardDoctor, Pacients } from "./protected-pages/doctor";
 import Food from "./protected-pages/Food";
 import { SignInPatient } from "./public-pages";
+import { Diet } from "./protected-pages/patient/Diet";
 
 const AppRoutes = () => {
   const { status } = useDoctor();
@@ -27,20 +28,8 @@ const AppRoutes = () => {
             <Route index element={<DashboardDoctor />} />
             <Route path="/pacients" element={<Pacients />} />
             <Route path="/food" element={<Food />} />
+            <Route path="/diet" element={<Diet />} />
           </Route>
-          {/*{patient?.role === "USER" ? (
-            <Route path="/" element={<ProtectedRoutes />}>
-              <Route index element={<DashboardPatient />} />
-              <Route path="/food" element={<Food />} />
-              <Route path="/diet" element={<Diet />} />
-            </Route>
-          ) : (
-            <Route path="/" element={<ProtectedRoutes />}>
-              <Route index element={<DashboardDoctor />} />
-              <Route path="/pacients" element={<Pacients />} />
-              <Route path="/food" element={<Food />} />
-            </Route>
-          )} */}
         </>
       ) : (
         <>

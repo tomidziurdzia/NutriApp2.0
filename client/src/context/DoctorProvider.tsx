@@ -30,8 +30,19 @@ export interface Patient {
   fats: number;
 }
 
+export interface Food {
+  id: string;
+  name: string;
+  category: string;
+  kcal: number;
+  proteins: number;
+  carbohydrates: number;
+  fats: number;
+}
+
 interface DoctorContextType {
   role?: string;
+  food: Food[];
   status: DoctorStatus;
   data?: DoctorSignUpResponse | DoctorSignInResponse;
   doctor?: Doctor;
@@ -42,6 +53,7 @@ interface DoctorContextType {
 }
 
 const defaultContextValue: DoctorContextType = {
+  food: [],
   patients: [],
   status: "loading",
   signup: () => {
@@ -68,6 +80,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<DoctorSignUpResponse>();
   const [doctor, setDoctor] = useState<Doctor>();
   const [patients, setPatients] = useState<Patient[]>([]);
+  const [food, setFood] = useState<Food[]>([]);
   const [role, setRole] = useState<string | undefined>("");
 
   useEffect(() => {
@@ -89,8 +102,12 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedPatients = await DoctorService.getPatients();
+      const [fetchedPatients, fetchedFood] = await Promise.all([
+        DoctorService.getPatients(),
+        DoctorService.getFood(),
+      ]);
       setPatients(fetchedPatients.data!);
+      setFood(fetchedFood.data);
     };
 
     fetchData();
@@ -144,6 +161,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
         patients,
         addPatient,
         role,
+        food,
       }}
     >
       {children}

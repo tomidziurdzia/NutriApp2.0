@@ -51,12 +51,18 @@ const getPatients = async () => {
   return patients;
 };
 
+const getFood = async () => {
+  const food = await prisma.food.findMany();
+  return food;
+};
+
 const DoctorModel = {
   create,
   getByEmail,
   getById,
   addPatient,
   getPatients,
+  getFood,
 };
 
 export default DoctorModel;

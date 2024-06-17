@@ -21,7 +21,7 @@ const ProtectedRoutes = () => {
       <div className="flex flex-col">
         <Header />
         <div className="bg-muted">
-          <div className="bg-white m-2 rounded-sm shadow-sm min-h-[calc(100vh-82px)]">
+          <div className=" m-2 rounded-sm shadow-sm min-h-[calc(100vh-82px)]">
             <Outlet />
           </div>
         </div>

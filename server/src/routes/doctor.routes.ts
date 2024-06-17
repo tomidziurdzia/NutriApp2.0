@@ -13,4 +13,6 @@ router
   .post(checkDoctor, DoctorController.addPatient)
   .get(checkDoctor, DoctorController.getPatients);
 
+router.route("/food").get(checkDoctor, DoctorController.getFood);
+
 export default router;

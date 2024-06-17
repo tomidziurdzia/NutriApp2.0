@@ -7,13 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import usePatient from "@/hooks/usePatient";
+import useDoctor from "@/hooks/useDoctor";
 
 const Food = () => {
-  // const { food } = usePatient();
+  const { food } = useDoctor();
 
   return (
-    <Table>
+    <Table className="bg-white">
       <TableCaption>A list of food.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -26,7 +26,7 @@ const Food = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {/* {food?.map((data) => (
+        {food?.map((data) => (
           <TableRow key={data.id} className="text-slate-400">
             <TableCell className="capitalize">{data.name}</TableCell>
             <TableCell className="capitalize">{data.category}</TableCell>
@@ -43,7 +43,7 @@ const Food = () => {
               {data.fats}
             </TableCell>
           </TableRow>
-        ))} */}
+        ))}
       </TableBody>
     </Table>
   );

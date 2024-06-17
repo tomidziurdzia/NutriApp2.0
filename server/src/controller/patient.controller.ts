@@ -48,11 +48,33 @@ const patient = async (req: RequestExt, res: Response, next: NextFunction) => {
   }
 };
 
+// const daily = async (req: RequestExt, res: Response, next: NextFunction) => {
+//   try {
+//     const patient = req.patient;
+
+//     const daily: DailyDietInput = req.body;
+
+//     const data = await PatientModel.addDaily(daily, patient?.id!);
+
+//     sendSuccessResponse(res, data, HttpStatusCode.CREATED);
+//   } catch (error: any) {
+//     sendErrorResponse(res, error.message, HttpStatusCode.BAD_REQUEST);
+//     next(error);
+//   }
+// };
+
 const daily = async (req: RequestExt, res: Response, next: NextFunction) => {
   try {
     const patient = req.patient;
 
     const daily: DailyDietInput = req.body;
+
+    console.log(daily);
+
+    // export interface DailyDietInput {
+    //   foods: FoodDosisInput[];
+    //   patientId: string;
+    // }
 
     const data = await PatientModel.addDaily(daily, patient?.id!);
 

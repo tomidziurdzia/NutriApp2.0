@@ -156,12 +156,22 @@ const getPatients = async (
   }
 };
 
+const getFood = async (req: RequestExt, res: Response, next: NextFunction) => {
+  try {
+    const food = await DoctorModel.getFood();
+    return sendSuccessResponse(res, food, HttpStatusCode.OK);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const DoctorController = {
   signup,
   signin,
   doctor,
   addPatient,
   getPatients,
+  getFood,
 };
 
 export default DoctorController;

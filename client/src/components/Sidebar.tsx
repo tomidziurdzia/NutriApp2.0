@@ -17,7 +17,6 @@ const Sidebar = () => {
   const { role: doctorRole } = useDoctor();
 
   const role = patientRole || doctorRole;
-  console.log(role);
   return (
     <>
       <div className="flex-1">
@@ -29,13 +28,15 @@ const Sidebar = () => {
             <Home className="h-6 w-6" />
             Dashboard
           </NavLink>
-          <NavLink
-            to="/diet"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
-          >
-            <PersonStanding className="h-6 w-6" />
-            Diet
-          </NavLink>
+          {role === "PATIENT" && (
+            <NavLink
+              to="/diet"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
+            >
+              <PersonStanding className="h-6 w-6" />
+              Diet
+            </NavLink>
+          )}
           {role === "DOCTOR" && (
             <NavLink
               to="/pacients"

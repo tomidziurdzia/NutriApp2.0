@@ -62,6 +62,21 @@ export interface AddPatientResponse {
   };
 }
 
+export interface FoodResponse {
+  success: boolean;
+  data: Food[];
+}
+
+export interface Food {
+  id: string;
+  carbohydrates: number;
+  category: string;
+  fats: number;
+  kcal: number;
+  name: string;
+  proteins: number;
+}
+
 const signup = async (doctor: DoctorSignUp): Promise<DoctorSignUpResponse> => {
   try {
     const { data } = await clientAxios.post("/doctor", doctor);
@@ -114,6 +129,23 @@ const addPatient = async (patient: AddPatient): Promise<AddPatientResponse> => {
   }
 };
 
-const DoctorService = { signup, signin, doctor, getPatients, addPatient };
+const getFood = async (): Promise<FoodResponse> => {
+  try {
+    const { data } = await clientAxios.get("doctor/food");
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+
+const DoctorService = {
+  signup,
+  signin,
+  doctor,
+  getPatients,
+  addPatient,
+  getFood,
+};
 
 export default DoctorService;

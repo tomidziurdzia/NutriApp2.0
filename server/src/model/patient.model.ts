@@ -23,6 +23,7 @@ interface PatientReponse {
 
 export interface DailyDietInput {
   foods: FoodDosisInput[];
+  date: Date;
 }
 
 interface FoodDosisInput {
@@ -53,14 +54,16 @@ const getByEmail = async (email: string): Promise<PatientReponse | null> => {
 const addDaily = async (
   daily: DailyDietInput,
   patientId: string,
-  dailyDate = new Date()
+  dailyDate: Date
 ) => {
-  const startOfDay = moment(dailyDate).startOf("day").toDate();
-  const endOfDay = moment(dailyDate).endOf("day").toDate();
+  const startOfDay = moment(dailyDate).format().split("T")[0];
   const existingDailyDiet = await prisma.dailyDiet.findFirst({
     where: {
       patientId: patientId,
-      date: { gte: startOfDay, lt: endOfDay },
+      date: startOfDay,
+    },
+    include: {
+      foods: true,
     },
   });
 
@@ -70,6 +73,7 @@ const addDaily = async (
         id: existingDailyDiet.id,
       },
       data: {
+        date: startOfDay,
         foods: {
           upsert: daily.foods.map((food) => ({
             where: { id: food.foodId },
@@ -97,6 +101,7 @@ const addDaily = async (
     return prisma.dailyDiet.create({
       data: {
         patient: { connect: { id: patientId } },
+        date: startOfDay,
         foods: {
           create: daily.foods.map((foodDosis) => ({
             food: {
@@ -109,6 +114,25 @@ const addDaily = async (
       },
       include: {
         foods: true,
+      },
+    });
+  }
+};
+
+const deleteDosis = async (id: string, date: string) => {
+  const filterByDate = await prisma.dailyDiet.findFirst({
+    where: {
+      date,
+    },
+    include: {
+      foods: true,
+    },
+  });
+
+  if (filterByDate) {
+    return prisma.foodDosis.delete({
+      where: {
+        id,
       },
     });
   }
@@ -130,6 +154,7 @@ const PatientModel = {
   getByEmail,
   addDaily,
   getDaily,
+  deleteDosis,
 };
 
 export default PatientModel;

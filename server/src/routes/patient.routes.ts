@@ -12,4 +12,10 @@ router
   .post(checkPatient, PatientController.daily)
   .get(checkPatient, PatientController.getDaily);
 
+router.delete(
+  "/daily/:id/:date",
+  checkPatient,
+  PatientController.deleteFoodDosis
+);
+
 export default router;

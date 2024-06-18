@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import {
   HttpStatusCode,
   sendErrorResponse,
+  sendSuccessNoDataResponse,
   sendSuccessResponse,
 } from "../utils/response-handler";
 import { comparePasswords } from "../utils/hash-password";
 import { generateToken } from "../utils/generate-jwt";
 import PatientModel, { DailyDietInput } from "../model/patient.model";
 import { RequestExt } from "../middleware/check-patient";
+import moment from "moment";
 
 const signin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -68,15 +70,15 @@ const daily = async (req: RequestExt, res: Response, next: NextFunction) => {
     const patient = req.patient;
 
     const daily: DailyDietInput = req.body;
+    const { date, ...rest } = daily;
 
-    console.log(daily);
+    const dateSelected = moment(daily.date).format();
 
-    // export interface DailyDietInput {
-    //   foods: FoodDosisInput[];
-    //   patientId: string;
-    // }
-
-    const data = await PatientModel.addDaily(daily, patient?.id!);
+    const data = await PatientModel.addDaily(
+      daily,
+      patient?.id!,
+      dateSelected as unknown as Date
+    );
 
     sendSuccessResponse(res, data, HttpStatusCode.CREATED);
   } catch (error: any) {
@@ -95,11 +97,31 @@ const getDaily = async (req: RequestExt, res: Response, next: NextFunction) => {
   }
 };
 
+const deleteFoodDosis = async (
+  req: RequestExt,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, date } = req.params;
+
+  const resetDate = moment(date).format().split("T")[0];
+
+  try {
+    const data = await PatientModel.deleteDosis(id, resetDate);
+    console.log(data);
+    sendSuccessNoDataResponse(res, "Deleted Succesfully", HttpStatusCode.OK);
+  } catch (error: any) {
+    sendErrorResponse(res, error.message, HttpStatusCode.BAD_REQUEST);
+    next(error);
+  }
+};
+
 const PatientController = {
   signin,
   patient,
   daily,
   getDaily,
+  deleteFoodDosis,
 };
 
 export default PatientController;

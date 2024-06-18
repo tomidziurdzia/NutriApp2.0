@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Doctor {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String @id @default(uuid())  
   name      String
   lastname  String
   email     String @unique
@@ -26,7 +26,7 @@ model Doctor {
 }
 
 model Patient {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  id            String @id @default(uuid()) 
   name          String
   lastname      String
   email         String @unique
@@ -38,7 +38,7 @@ model Patient {
   carbohydrates Float
   fats          Float
   doctor        Doctor  @relation(fields: [doctorId], references: [id])
-  doctorId      String @db.ObjectId
+  doctorId      String 
   role          Role @default(PATIENT)
   dailyDiet     DailyDiet[]
 }
@@ -49,7 +49,7 @@ enum Role {
 }
 
 model Food {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  id            String @id @default(uuid())
   name          String
   category      String
   kcal          Float
@@ -60,24 +60,24 @@ model Food {
 }
 
 model DailyDiet {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  date          DateTime @default(now()) @db.Date
-  patientId     String  @db.ObjectId
+  id            String @id @default(uuid()) 
+  date          String
+  patientId     String  
   patient       Patient @relation(fields: [patientId], references: [id])
   foods         FoodDosis[]
 }
 
 model FoodDosis {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  id            String @id @default(uuid())
   quantity      Float
 
   dishType      DishType
 
   food          Food   @relation(fields: [foodId], references: [id])
-  foodId        String @db.ObjectId
+  foodId        String 
 
   dailyDiet     DailyDiet @relation(fields: [dailyDietId], references: [id])
-  dailyDietId   String @db.ObjectId
+  dailyDietId   String
 }
 
 enum DishType {

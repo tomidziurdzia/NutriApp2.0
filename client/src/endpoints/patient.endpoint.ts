@@ -99,12 +99,23 @@ const getDaily = async (): Promise<DietDailyResponse> => {
 };
 
 const createDailyFood = async (
-  daily: FoodList[]
+  daily: FoodList[],
+  date: Date
 ): Promise<CreateDietDailyReponse> => {
   const foods = [...daily];
   try {
-    const { data } = await clientAxios.post("/patient/daily", { foods });
+    const { data } = await clientAxios.post("/patient/daily", { foods, date });
 
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+
+const deleteFoodDosis = async (id: string, date: string): Promise<void> => {
+  try {
+    const { data } = await clientAxios.delete(`/patient/daily/${id}/${date}`);
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
@@ -117,6 +128,7 @@ const PatientService = {
   patient,
   getDaily,
   createDailyFood,
+  deleteFoodDosis,
 };
 
 export default PatientService;

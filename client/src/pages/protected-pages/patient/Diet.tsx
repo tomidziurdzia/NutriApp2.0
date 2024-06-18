@@ -1,4 +1,9 @@
-import { DailyDietForm, MealList, ResumeNutrition } from "@/components";
+import {
+  DailyDietForm,
+  DatePicker,
+  MealList,
+  ResumeNutrition,
+} from "@/components";
 import { Button } from "@/components/ui/button";
 import usePatient from "@/hooks/usePatient";
 import {
@@ -12,7 +17,16 @@ import moment from "moment";
 import { useState } from "react";
 
 export const Diet = () => {
-  const { dailyDiet } = usePatient();
+  const { dailyDiet, date } = usePatient();
+
+  // const [date, setDate] = useState<Date | undefined>();
+
+  const dailyDietFiltered = dailyDiet?.filter((dailyDiet) => {
+    const dailyDate = (dailyDiet.date as unknown as string)?.split("T")[0];
+    const dateFilter = moment(date).format().split("T")[0];
+    return dailyDate === dateFilter;
+  });
+
   // Inicializar variables para totales
   let totalKcal = 0;
   let totalProteins = 0;
@@ -20,7 +34,7 @@ export const Diet = () => {
   let totalFats = 0;
 
   // Iterar sobre los datos
-  dailyDiet?.forEach((entry) => {
+  dailyDietFiltered?.forEach((entry) => {
     // Iterar sobre los alimentos de cada entrada (comida)
     entry.foods?.forEach((food) => {
       const {
@@ -35,27 +49,19 @@ export const Diet = () => {
     });
   });
 
-  const filterDate = moment(new Date());
-
-  const dailyFilterDate = dailyDiet?.filter(
-    (dailyDiet) =>
-      (dailyDiet?.date as unknown as string)?.split("T")[0] ===
-      filterDate.toISOString().split("T")[0]
-  );
-
-  const breakfast = dailyFilterDate?.map((foods) =>
+  const breakfast = dailyDietFiltered?.map((foods) =>
     foods.foods.filter((food) => food.dishType === "BREAKFAST")
   );
 
-  const lunch = dailyFilterDate?.map((foods) =>
+  const lunch = dailyDietFiltered?.map((foods) =>
     foods.foods.filter((food) => food.dishType === "LUNCH")
   );
 
-  const dinner = dailyFilterDate?.map((foods) =>
+  const dinner = dailyDietFiltered?.map((foods) =>
     foods.foods.filter((food) => food.dishType === "DINNER")
   );
 
-  const snack = dailyFilterDate?.map((foods) =>
+  const snack = dailyDietFiltered?.map((foods) =>
     foods.foods.filter((food) => food.dishType === "SNACK")
   );
 
@@ -85,6 +91,8 @@ export const Diet = () => {
             >
               <PlusCircle className="w-8 h-8" strokeWidth={1.5} />
             </Button>
+            <DatePicker />
+
             <DailyDietForm open={open} handleOpen={handleOpen} />
           </div>
           <div className="flex flex-col">
@@ -96,7 +104,7 @@ export const Diet = () => {
                 <span className="text-xl">Breakfast</span>
               </div>
               {breakfast?.map((food) => (
-                <MealList key={food[0]?.dailyDietId} foodMeal={food} />
+                <MealList key={food.length} foodMeal={food} />
               ))}
             </div>
 
@@ -108,7 +116,7 @@ export const Diet = () => {
                 <span className="text-xl">Lunch</span>
               </div>
               {lunch?.map((food) => (
-                <MealList key={food[0]?.dailyDietId} foodMeal={food} />
+                <MealList key={food.length} foodMeal={food} />
               ))}
             </div>
 
@@ -120,7 +128,7 @@ export const Diet = () => {
                 <span className="text-xl">Snacks</span>
               </div>
               {snack?.map((food) => (
-                <MealList key={food[0]?.dailyDietId} foodMeal={food} />
+                <MealList key={food.length} foodMeal={food} />
               ))}
             </div>
 
@@ -132,7 +140,7 @@ export const Diet = () => {
                 <span className="text-xl">Dinner</span>
               </div>
               {dinner?.map((food) => (
-                <MealList key={food[0]?.dailyDietId} foodMeal={food} />
+                <MealList key={food.length} foodMeal={food} />
               ))}
             </div>
           </div>

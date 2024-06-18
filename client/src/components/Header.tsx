@@ -1,10 +1,8 @@
 import {
   MenuIcon,
-  Home,
   PersonStanding,
   Calendar,
   MessageSquare,
-  Settings,
   Sandwich,
   LogOut,
   Apple,
@@ -53,8 +51,8 @@ const Header = () => {
               to="/"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
             >
-              <Home className="h-6 w-6" />
-              Dashboard
+              <Calendar className="h-6 w-6" />
+              Calendar
             </NavLink>
             <NavLink
               to="/pacients"
@@ -71,26 +69,12 @@ const Header = () => {
               Food
             </NavLink>
             <NavLink
-              to="/calendar"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
-            >
-              <Calendar className="h-6 w-6" />
-              Calendar
-            </NavLink>
-            <NavLink
               to="/chat"
               className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
             >
               <MessageSquare className="h-6 w-6" />
               Chat
             </NavLink>{" "}
-            <NavLink
-              to="/settings"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
-            >
-              <Settings className="h-6 w-6" />
-              Settings
-            </NavLink>
           </nav>
           <Button className="flex items-center justify-start bg-transparent text-lg p-0 pb-2 gap-3 rounded-lg px-3 text-muted-foreground transition-all hover:bg-primary hover:text-white">
             <LogOut />

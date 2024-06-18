@@ -83,7 +83,7 @@ const signup = async (doctor: DoctorSignUp): Promise<DoctorSignUpResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -95,7 +95,7 @@ const signin = async (doctor: DoctorSignIn): Promise<DoctorSignInResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -105,7 +105,7 @@ const doctor = async (): Promise<DoctorSignInResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -115,7 +115,7 @@ const getPatients = async (): Promise<PatientsResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -125,7 +125,7 @@ const addPatient = async (patient: AddPatient): Promise<AddPatientResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -135,7 +135,7 @@ const getFood = async (): Promise<FoodResponse> => {
     return data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
-    return error.response.data;
+    return error.response?.data;
   }
 };
 

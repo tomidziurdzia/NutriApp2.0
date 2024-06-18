@@ -11,6 +11,7 @@ import { FoodList } from "@/components/DailyDietForm";
 type PatientStatus = "authenticated" | "not-authenticated" | "loading";
 
 interface PatientContextType {
+  date: Date;
   role?: string;
   status: PatientStatus;
   data?: PatientSignInResponse;
@@ -20,9 +21,12 @@ interface PatientContextType {
   addDailyFood: (
     food: FoodList[]
   ) => Promise<CreateDietDailyReponse | undefined>;
+  setDatePicker: (date: Date) => void;
+  deleteDosis: (id: string, date: string) => void;
 }
 
 const defaultContextValue: PatientContextType = {
+  date: new Date(),
   status: "loading",
   patient: {
     id: "",
@@ -50,6 +54,16 @@ const defaultContextValue: PatientContextType = {
       "tried to use watch list context but there is not provider"
     );
   },
+  setDatePicker: () => {
+    throw new Error(
+      "tried to use watch list context but there is not provider"
+    );
+  },
+  deleteDosis: () => {
+    throw new Error(
+      "tried to use watch list context but there is not provider"
+    );
+  },
 };
 
 const PatientContext = createContext<PatientContextType>(defaultContextValue);
@@ -60,6 +74,8 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
   const [role, setRole] = useState<string | undefined>("");
   const [patient, setPatient] = useState<Patient>();
   const [dailyDiet, setDailyDiet] = useState<DailyDiet[]>([]);
+
+  const [date, setDate] = useState<Date>(new Date());
 
   useEffect(() => {
     const authenticate = async () => {
@@ -86,7 +102,7 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
     };
 
     getDaily();
-  }, [dailyDiet.length]);
+  }, [dailyDiet?.length]);
 
   const signin = async (patient: PatientSignIn) => {
     const data = await PatientService.signin(patient);
@@ -103,7 +119,7 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const addDailyFood = async (food: FoodList[]) => {
-    const data = await PatientService.createDailyFood(food);
+    const data = await PatientService.createDailyFood(food, date);
     if (data.success) {
       setDailyDiet(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,6 +127,21 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
       );
       return data;
     }
+  };
+
+  const setDatePicker = (date: Date) => {
+    setDate(date);
+  };
+
+  const deleteDosis = async (id: string, date: string) => {
+    await PatientService.deleteFoodDosis(id, date);
+
+    const getDaily = async () => {
+      const dailyDiet = await PatientService.getDaily();
+      setDailyDiet(dailyDiet.data);
+    };
+
+    getDaily();
   };
 
   return (
@@ -123,6 +154,9 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
         patient,
         dailyDiet,
         addDailyFood,
+        date,
+        setDatePicker,
+        deleteDosis,
       }}
     >
       {children}

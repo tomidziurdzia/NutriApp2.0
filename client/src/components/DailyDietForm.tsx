@@ -94,7 +94,6 @@ const DailyDietForm = ({
     e.preventDefault();
 
     const data = await addDailyFood(selectedCheckboxes);
-    console.log(data);
 
     if (data?.success) {
       handleOpen(!open);

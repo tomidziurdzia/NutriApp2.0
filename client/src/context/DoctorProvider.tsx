@@ -50,6 +50,7 @@ interface DoctorContextType {
   signup: (doctor: DoctorSignUp) => Promise<DoctorSignUpResponse>;
   signin: (doctor: DoctorSignIn) => Promise<DoctorSignInResponse>;
   addPatient: (patient: AddPatient) => Promise<AddPatientResponse>;
+  logout: () => void;
 }
 
 const defaultContextValue: DoctorContextType = {
@@ -67,6 +68,11 @@ const defaultContextValue: DoctorContextType = {
     );
   },
   addPatient: () => {
+    throw new Error(
+      "tried to use watch list context but there is not provider"
+    );
+  },
+  logout: () => {
     throw new Error(
       "tried to use watch list context but there is not provider"
     );
@@ -150,6 +156,10 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.clear();
+  };
+
   return (
     <DoctorContext.Provider
       value={{
@@ -162,6 +172,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
         addPatient,
         role,
         food,
+        logout,
       }}
     >
       {children}

@@ -4,10 +4,11 @@ import useDoctor from "../hooks/useDoctor";
 // import usePatient from "../hooks/usePatient";
 import SignIn from "./public-pages/SignIn";
 import SignUp from "./public-pages/SignUp";
-import { DashboardDoctor, Pacients } from "./protected-pages/doctor";
+import { Pacients } from "./protected-pages/doctor";
 import Food from "./protected-pages/Food";
 import { SignInPatient } from "./public-pages";
 import { Diet } from "./protected-pages/patient/Diet";
+import Dashboard from "./protected-pages/Dashboard";
 
 const AppRoutes = () => {
   const { status } = useDoctor();
@@ -25,7 +26,7 @@ const AppRoutes = () => {
         <>
           <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<ProtectedRoutes />}>
-            <Route index element={<DashboardDoctor />} />
+            <Route index element={<Dashboard />} />
             <Route path="/pacients" element={<Pacients />} />
             <Route path="/food" element={<Food />} />
             <Route path="/diet" element={<Diet />} />

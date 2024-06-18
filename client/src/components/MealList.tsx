@@ -8,8 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { CircleX } from "lucide-react";
+import usePatient from "@/hooks/usePatient";
 
 const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
+  const { date, deleteDosis } = usePatient();
   // Variables para almacenar totales
   const totalKcal = foodMeal
     .map((food) => (food.quantity * food.food.kcal) / 100)
@@ -27,6 +30,10 @@ const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
     .map((food) => (food.quantity * food.food.fats) / 100)
     .reduce((acc, current) => acc + current, 0);
 
+  const handleDelete = async (id: string) => {
+    await deleteDosis(id, date as unknown as string);
+  };
+
   return (
     <>
       {foodMeal.length > 0 && (
@@ -40,6 +47,7 @@ const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
               <TableHead className="text-center">Proteins</TableHead>
               <TableHead className="text-center">Carbohydrates</TableHead>
               <TableHead className="text-center">Fats</TableHead>
+              <TableHead className="text-center"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -62,6 +70,14 @@ const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
                 <TableCell className="text-center">
                   {((food.quantity * food.food.fats) / 100).toFixed(2)}
                 </TableCell>
+                <TableCell>
+                  <button
+                    className="rounded-full"
+                    onClick={() => handleDelete(food.id)}
+                  >
+                    <CircleX className="text-red-500" strokeWidth={1} />
+                  </button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -82,6 +98,7 @@ const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
               <TableHead className="text-center">
                 {totalFats.toFixed(2)}
               </TableHead>
+              <TableHead></TableHead>
             </TableRow>
           </TableFooter>
         </Table>
@@ -91,12 +108,3 @@ const MealList = ({ foodMeal }: { foodMeal: Foods[] }) => {
 };
 
 export default MealList;
-
-// export interface Foods {
-//   id: string;
-//   quantity: number;
-//   dishType: string;
-//   dailyDietId: string;
-//   foodId: string;
-//   food: [];
-// }

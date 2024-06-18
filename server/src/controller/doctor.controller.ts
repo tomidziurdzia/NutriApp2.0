@@ -31,6 +31,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
     if (repeatPassword !== password) throw new Error("Passwords do not match");
 
     const doctorExist = await DoctorModel.getByEmail(email);
+    console.log(doctorExist);
     if (doctorExist) throw new Error("Doctor already exist");
 
     const { repeatPassword: repeat, ...addDoctor } = doctor;

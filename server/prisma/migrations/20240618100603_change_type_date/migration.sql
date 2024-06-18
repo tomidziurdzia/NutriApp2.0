@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DailyDiet" ALTER COLUMN "date" SET DATA TYPE TEXT;

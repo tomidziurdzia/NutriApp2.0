@@ -19,7 +19,7 @@ const Pacients = () => {
       <div className="p-2 w-full">
         <PatientForm />
       </div>
-      <Table>
+      <Table className="bg-white">
         <TableCaption>A list of your patients.</TableCaption>
         <TableHeader>
           <TableRow>

@@ -10,7 +10,6 @@ import CalendarPatient from "./CalendarPatient";
 import DayCalendar from "./DayCalendar";
 import ChatBottom from "./ChatBottom";
 import Chat from "@/pages/protected-pages/Chat";
-import ChatLayout from "./ChatLayout";
 import ChatList from "./ChatList";
 import NewChatForm from "./NewChatForm";
 import ChatMessage from "./ChatMessage";
@@ -31,5 +30,4 @@ export {
   ChatList,
   NewChatForm,
   ChatMessage,
-  ChatLayout,
 };

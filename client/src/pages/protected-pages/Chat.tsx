@@ -14,8 +14,8 @@ const Chat = () => {
   }, [messages?.length, patientId]);
 
   return (
-    <div className="flex flex-col justify-between w-full h-full p-2">
-      <div className="w-full overflow-y-auto overflow-x-hidden h-full flex flex-col">
+    <div className="flex flex-col justify-between w-full p-2 flex-1">
+      <div className="w-full overflow-y-auto overflow-x-hidden  flex flex-col flex-1">
         <AnimatePresence>
           {messages?.map((message) => (
             <ChatMessage key={message.id} message={message} />

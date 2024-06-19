@@ -5,7 +5,7 @@ const Chats = () => {
   const { chat } = useDoctor();
 
   return (
-    <div className="flex p-2">
+    <div className="flex p-2 flex-1">
       <div className="flex flex-col w-40 gap-4">
         <NewChatForm chat={chat} />
 

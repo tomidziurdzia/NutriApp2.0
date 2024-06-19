@@ -23,7 +23,7 @@ const SignInPatient = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await signin(values);
-    if (data.success) return navigate("/");
+    if (data) return navigate("/");
   };
 
   return (

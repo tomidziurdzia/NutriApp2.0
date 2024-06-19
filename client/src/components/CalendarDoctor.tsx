@@ -39,14 +39,6 @@ const CalendarDoctor = () => {
           </time>
         </h1>
         <div className="flex items-center">
-          <div className="hidden md:ml-4 md:flex md:items-center">
-            <button
-              type="button"
-              className="ml-6 rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Add appoinment
-            </button>
-          </div>
           <Menu as="div" className="relative ml-6 md:hidden">
             <MenuButton className="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500">
               <span className="sr-only">Open menu</span>
@@ -67,10 +59,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Create event
                       </a>
@@ -82,10 +78,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Go to today
                       </a>
@@ -97,10 +97,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Day view
                       </a>
@@ -110,10 +114,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Week view
                       </a>
@@ -123,10 +131,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Month view
                       </a>
@@ -136,10 +148,14 @@ const CalendarDoctor = () => {
                     {({ focus }) => (
                       <a
                         href="#"
-                        className={classNames(
-                          focus ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        className={`
+                          ${
+                            focus
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700"
+                          }
                           "block px-4 py-2 text-sm"
-                        )}
+                        `}
                       >
                         Year view
                       </a>
@@ -378,7 +394,7 @@ const CalendarDoctor = () => {
                     className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100"
                   >
                     <p className="order-1 font-semibold text-blue-700">
-                      Breakfast
+                      Ximena Apel
                     </p>
                     <p className="text-blue-500 group-hover:text-blue-700">
                       <time dateTime="2022-01-12T08:00">9:00 AM</time>
@@ -394,26 +410,26 @@ const CalendarDoctor = () => {
                     className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-pink-50 p-2 text-xs leading-5 hover:bg-pink-100"
                   >
                     <p className="order-1 font-semibold text-pink-700">
-                      Flight to Paris
+                      Rojas Diego
                     </p>
                     <p className="text-pink-500 group-hover:text-pink-700">
-                      <time dateTime="2022-01-12T07:30">7:30 AM</time>
+                      <time dateTime="2022-01-12T07:30">11:00 AM</time>
                     </p>
                   </a>
                 </li>
                 <li
-                  className="relative mt-px hidden sm:col-start-6 sm:flex"
-                  style={{ gridRow: "122 / span 24" }}
+                  className="relative mt-px hidden sm:col-start-5 sm:flex"
+                  style={{ gridRow: "2 / span 2" }}
                 >
                   <a
                     href="#"
                     className="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-gray-100 p-2 text-xs leading-5 hover:bg-gray-200"
                   >
                     <p className="order-1 font-semibold text-gray-700">
-                      Meeting with design team at Disney
+                      Hernández Luisa
                     </p>
                     <p className="text-gray-500 group-hover:text-gray-700">
-                      <time dateTime="2022-01-15T10:00">10:00 AM</time>
+                      <time dateTime="2022-01-15T10:00">09:00 AM</time>
                     </p>
                   </a>
                 </li>

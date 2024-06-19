@@ -10,6 +10,11 @@ import DoctorService, {
 } from "../endpoints/doctor.endpoint";
 import ChatService, { Chat, CreateChat } from "@/endpoints/chat.endpoint";
 
+import { Socket, io } from "socket.io-client";
+import { DefaultEventsMap } from "@socket.io/component-emitter";
+
+let socket: Socket<DefaultEventsMap, DefaultEventsMap>;
+
 type DoctorStatus = "authenticated" | "not-authenticated" | "loading";
 
 export interface Doctor {
@@ -116,7 +121,7 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
   const [role, setRole] = useState<string | undefined>("");
 
   const [chat, setChat] = useState<Chat[] | undefined>([]);
-  const [messages, setMessages] = useState<Message[] | undefined>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     const getChat = async () => {
@@ -134,6 +139,20 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
       setMessages(data.data);
     }
   };
+
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL);
+    // Escuchar el evento 'newMessage'
+    socket.on("newMessage", (message: Message) => {
+      setMessages((prevMessages) => {
+        // Verificar si el mensaje ya existe
+        if (prevMessages?.some((msg) => msg.id === message.id)) {
+          return prevMessages;
+        }
+        return [...prevMessages!, message];
+      });
+    });
+  }, []);
 
   useEffect(() => {
     const authenticate = async () => {
@@ -216,8 +235,9 @@ const DoctorProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createMessage = async (text: string, patientId: string) => {
-    await ChatService.createMessage(text, patientId);
-    await getMessages(patientId);
+    const data = await ChatService.createMessage(text, patientId);
+    setMessages((prevData) => [...prevData, data.data] as Message[]);
+    socket.emit("newMessage", data?.data as unknown as Message);
   };
 
   return (

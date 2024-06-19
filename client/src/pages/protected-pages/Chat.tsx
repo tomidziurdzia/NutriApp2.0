@@ -11,6 +11,7 @@ const Chat = () => {
 
   useEffect(() => {
     getMessages(patientId!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages?.length, patientId]);
 
   return (

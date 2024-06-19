@@ -13,13 +13,6 @@ import Chat from "./protected-pages/Chat";
 // import Chat from "./protected-pages/ChatDelete";
 const AppRoutes = () => {
   const { status } = useDoctor();
-  // const {s} = usePatient();
-
-  // let status = "authenticated" || "not-authenticated" || "loading";
-
-  // if (status === "loading") {
-  //   return <div>Loading..............</div>;
-  // }
 
   return (
     <Routes>

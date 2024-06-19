@@ -110,8 +110,8 @@ const PatientProvider = ({ children }: { children: ReactNode }) => {
 
     if (data.success) {
       setData(data.data as unknown as PatientSignInResponse);
-      setRole(data.data?.role);
       setStatus("authenticated");
+      setRole(data.data?.role);
       return data;
     } else {
       setData(data);

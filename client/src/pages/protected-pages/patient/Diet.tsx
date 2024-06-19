@@ -104,7 +104,12 @@ export const Diet = () => {
                 <span className="text-xl">Breakfast</span>
               </div>
               {breakfast?.map((food) => (
-                <MealList key={food.length} foodMeal={food} />
+                <MealList
+                  key={
+                    food.length + new Date().getMilliseconds() + Math.random()
+                  }
+                  foodMeal={food}
+                />
               ))}
             </div>
 
@@ -116,7 +121,12 @@ export const Diet = () => {
                 <span className="text-xl">Lunch</span>
               </div>
               {lunch?.map((food) => (
-                <MealList key={food.length} foodMeal={food} />
+                <MealList
+                  key={
+                    food.length + new Date().getMilliseconds() + Math.random()
+                  }
+                  foodMeal={food}
+                />
               ))}
             </div>
 
@@ -128,7 +138,12 @@ export const Diet = () => {
                 <span className="text-xl">Snacks</span>
               </div>
               {snack?.map((food) => (
-                <MealList key={food.length} foodMeal={food} />
+                <MealList
+                  key={
+                    food.length + new Date().getMilliseconds() + Math.random()
+                  }
+                  foodMeal={food}
+                />
               ))}
             </div>
 
@@ -140,7 +155,12 @@ export const Diet = () => {
                 <span className="text-xl">Dinner</span>
               </div>
               {dinner?.map((food) => (
-                <MealList key={food.length} foodMeal={food} />
+                <MealList
+                  key={
+                    food.length + new Date().getMilliseconds() + Math.random()
+                  }
+                  foodMeal={food}
+                />
               ))}
             </div>
           </div>

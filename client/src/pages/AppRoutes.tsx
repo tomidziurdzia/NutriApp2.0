@@ -4,12 +4,13 @@ import useDoctor from "../hooks/useDoctor";
 // import usePatient from "../hooks/usePatient";
 import SignIn from "./public-pages/SignIn";
 import SignUp from "./public-pages/SignUp";
-import { Pacients } from "./protected-pages/doctor";
+import { Chats, Pacients } from "./protected-pages/doctor";
 import Food from "./protected-pages/Food";
 import { SignInPatient } from "./public-pages";
 import { Diet } from "./protected-pages/patient/Diet";
 import Dashboard from "./protected-pages/Dashboard";
-
+import Chat from "./protected-pages/Chat";
+// import Chat from "./protected-pages/ChatDelete";
 const AppRoutes = () => {
   const { status } = useDoctor();
   // const {s} = usePatient();
@@ -30,6 +31,10 @@ const AppRoutes = () => {
             <Route path="/pacients" element={<Pacients />} />
             <Route path="/food" element={<Food />} />
             <Route path="/diet" element={<Diet />} />
+            <Route path="/chats" element={<Chats />}>
+              <Route path="/chats/:patientId" />
+            </Route>
+            <Route path="/chat/:patientId" element={<Chat />} />
           </Route>
         </>
       ) : (

@@ -45,6 +45,7 @@ const getPatients = async () => {
       lastname: true,
       proteins: true,
       role: true,
+      avatar: true,
     },
   });
 

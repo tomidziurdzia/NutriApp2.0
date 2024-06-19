@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import prisma from "../utils/prisma";
 import jwt from "jsonwebtoken";
+import { IPatient } from "./check-patient";
 
 interface IDoctor {
   id: string;
@@ -11,6 +12,7 @@ interface IDoctor {
 
 export interface RequestExt extends Request {
   doctor?: IDoctor;
+  patient?: IPatient;
 }
 
 const checkDoctor = async (
@@ -49,6 +51,7 @@ const checkDoctor = async (
         name: true,
         lastname: true,
         role: true,
+        avatar: true,
       },
     });
 

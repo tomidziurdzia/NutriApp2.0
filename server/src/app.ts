@@ -3,8 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import doctorRouter from "./routes/doctor.routes";
 import patientRouter from "./routes/patient.routes";
-// import foodRouter from "./routes/food.router";
-// import dailyDietRouter from "./routes/daily-diet.router";
+import chatRouter from "./routes/chat.routes";
 
 const app = express();
 
@@ -15,8 +14,7 @@ dotenv.config();
 // Routes
 app.use("/api/doctor", doctorRouter);
 app.use("/api/patient", patientRouter);
-// app.use("/api/food", foodRouter);
-// app.use("/api/daily-diet", dailyDietRouter);
+app.use("/api/chat", chatRouter);
 
 const startServer = () => {
   const PORT = process.env.PORT ?? 8080;

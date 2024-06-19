@@ -11,18 +11,6 @@ export interface Day {
   data: [];
 }
 
-/*
-{
-  "bg-red-500":
-    totalCarbohydrates > patient!.carbohydrates * 0.9,
-  "bg-yellow-500":
-    totalCarbohydrates >= patient!.carbohydrates * 0.6 &&
-    totalCarbohydrates < patient!.carbohydrates * 0.9,
-  "bg-green-500":
-    totalCarbohydrates <= patient!.carbohydrates * 0.6,
-}
-*/
-
 const DayCalendar = ({ day }: { day: Day }) => {
   const { patient } = usePatient();
   // Inicializar variables para totales
@@ -43,8 +31,6 @@ const DayCalendar = ({ day }: { day: Day }) => {
     totalCarbohydrates += (quantity * carbohydrates) / 100;
     totalFats += (quantity * fats) / 100;
   });
-
-  console.log(totalKcal, totalProteins, totalCarbohydrates, totalFats);
 
   const today = moment(new Date()).date();
 

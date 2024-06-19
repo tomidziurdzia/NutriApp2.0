@@ -23,6 +23,10 @@ model Doctor {
   updatedAt DateTime @updatedAt
   patients  Patient[]
   role      Role @default(DOCTOR)
+  avatar    String
+  message       Message[]
+  chat          Chat[]
+
 }
 
 model Patient {
@@ -41,6 +45,41 @@ model Patient {
   doctorId      String 
   role          Role @default(PATIENT)
   dailyDiet     DailyDiet[]
+  avatar    String
+
+  message       Message[]
+  chat          Chat[]
+}
+
+model Chat {
+  id            String @id @default(uuid()) 
+  message       Message[]
+
+  doctor        Doctor @relation(fields: [doctorId], references: [id])
+  doctorId      String
+
+  patient       Patient @relation(fields: [patientId], references: [id])
+  patientId     String
+}
+
+model Message {
+  id            String @id @default(uuid())
+
+  text          String
+
+
+  chat       Chat @relation(fields: [chatId], references: [id])
+  chatId      String
+
+  doctor        Doctor? @relation(fields: [doctorId], references: [id])
+  doctorId      String?
+
+  patient       Patient? @relation(fields: [patientId], references: [id])
+  patientId     String?
+
+  createdAt     DateTime @default(now())
+
+  owner         Role
 }
 
 enum Role {

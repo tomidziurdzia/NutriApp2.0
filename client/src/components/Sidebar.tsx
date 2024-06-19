@@ -11,10 +11,12 @@ import usePatient from "@/hooks/usePatient";
 import useDoctor from "@/hooks/useDoctor";
 
 const Sidebar = () => {
-  const { role: patientRole } = usePatient();
+  const { role: patientRole, patient } = usePatient();
   const { role: doctorRole, logout } = useDoctor();
 
   const role = patientRole || doctorRole;
+
+  const patientId = patient?.id;
 
   const handleLogout = () => {
     logout();
@@ -58,13 +60,24 @@ const Sidebar = () => {
             <Apple className="h-6 w-6" />
             Food
           </NavLink>
-          <NavLink
-            to="/chat"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
-          >
-            <MessageSquare className="h-6 w-6" />
-            Chat
-          </NavLink>{" "}
+          {role === "DOCTOR" && (
+            <NavLink
+              to="/chats"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
+            >
+              <PersonStanding className="h-6 w-6" />
+              Chats
+            </NavLink>
+          )}
+          {role === "PATIENT" && (
+            <NavLink
+              to={`/chat/${patientId}`}
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:bg-primary hover:text-white"
+            >
+              <MessageSquare className="h-6 w-6" />
+              Chat
+            </NavLink>
+          )}
         </nav>
       </div>
       <Button

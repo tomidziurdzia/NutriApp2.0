@@ -47,6 +47,7 @@ const getByEmail = async (email: string): Promise<PatientReponse | null> => {
       proteins: true,
       role: true,
       password: true,
+      avatar: true,
     },
   });
 };

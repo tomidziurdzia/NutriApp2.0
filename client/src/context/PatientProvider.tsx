@@ -37,6 +37,7 @@ const defaultContextValue: PatientContextType = {
       name: "",
       lastname: "",
     },
+    avatar: "",
     role: "",
     token: "",
     carbohydrates: 0,

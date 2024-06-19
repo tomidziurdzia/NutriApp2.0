@@ -1,5 +1,6 @@
 import { Doctor, Patient } from "@/context/DoctorProvider";
 import clientAxios from "../config/clientAxios";
+import { CreateChat } from "./chat.endpoint";
 
 export interface DoctorSignUp {
   name: string;
@@ -56,6 +57,7 @@ export interface AddPatientResponse {
     carbohydrates: number;
     fats: number;
     role: string;
+    avatar: string;
   };
   error?: {
     message: string;
@@ -75,6 +77,23 @@ export interface Food {
   kcal: number;
   name: string;
   proteins: number;
+}
+
+export interface MessageResponse {
+  success: boolean;
+  data: Message[];
+}
+
+export interface Message {
+  id: string;
+  text: string;
+  chatId: string;
+  doctorId: string;
+  patientId: string;
+  createdAt: string;
+  owner: string;
+  patient: { avatar: string };
+  doctor: { avatar: string };
 }
 
 const signup = async (doctor: DoctorSignUp): Promise<DoctorSignUpResponse> => {
@@ -139,6 +158,31 @@ const getFood = async (): Promise<FoodResponse> => {
   }
 };
 
+const createChat = async (patientId: string): Promise<CreateChat> => {
+  try {
+    const { data } = await clientAxios.post("/chat/doctor/chat", { patientId });
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response?.data;
+  }
+};
+
+const getMessagesPatient = async (
+  patientId: string
+): Promise<MessageResponse> => {
+  try {
+    const { data } = await clientAxios.get(
+      `/chat/doctor/messages/${patientId}`
+    );
+
+    return data;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return error.response?.data;
+  }
+};
+
 const DoctorService = {
   signup,
   signin,
@@ -146,6 +190,8 @@ const DoctorService = {
   getPatients,
   addPatient,
   getFood,
+  createChat,
+  getMessagesPatient,
 };
 
 export default DoctorService;

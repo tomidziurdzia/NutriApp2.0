@@ -18,6 +18,7 @@ export interface Patient {
   fats: number;
   kcal: number;
   proteins: number;
+  avatar: string;
 }
 
 export interface PatientSignInResponse {

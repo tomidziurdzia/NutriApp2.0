@@ -15,20 +15,34 @@ import useDoctor from "@/hooks/useDoctor";
 import usePatient from "@/hooks/usePatient";
 
 const Header = () => {
-  const { doctor } = useDoctor();
-  const { data: patient } = usePatient();
+  const { doctor, role: doctorRole } = useDoctor();
+  const { patient, role: patientRole } = usePatient();
 
+  const role = patientRole || doctorRole;
   return (
     <div className="flex md:justify-end justify-start h-14 items-center gap-4 border-b px-4 lg:h-[65px] lg:px-6">
       <div className="hidden md:flex justify-center items-center gap-4 bg-muted py-1 px-4 rounded-3xl shadow-sm">
         <span>
-          {doctor?.name || patient?.data?.name} {doctor?.lastname}
+          {role === "DOCTOR"
+            ? `${doctor?.name}`
+            : role === "PATIENT"
+            ? `${patient?.name}`
+            : ""}{" "}
+          {role === "DOCTOR"
+            ? `${doctor?.lastname}`
+            : role === "PATIENT"
+            ? `${patient?.lastname}`
+            : ""}
         </span>
         <Avatar>
-          <AvatarImage alt="@shadcn" />
+          {doctor && <AvatarImage alt="@shadcn" src={doctor?.avatar} />}
+          {patient && <AvatarImage alt="@shadcn" src={patient?.avatar} />}
           <AvatarFallback>
-            {doctor?.name.at(0)}
-            {doctor?.lastname.at(0)}
+            {role === "DOCTOR"
+              ? `${doctor?.name.at(0)}${doctor?.lastname.at(0)}`
+              : role === "PATIENT"
+              ? `${patient?.name.at(0)}${patient?.lastname.at(0)}`
+              : ""}
           </AvatarFallback>
         </Avatar>
       </div>

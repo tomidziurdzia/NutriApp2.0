@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import prisma from "../utils/prisma";
 import jwt from "jsonwebtoken";
 
-interface IPatient {
+export interface IPatient {
   id: string;
   name: string;
   lastname: string;
@@ -54,6 +54,7 @@ const checkPatient = async (
         kcal: true,
         proteins: true,
         role: true,
+        avatar: true,
       },
     });
 
